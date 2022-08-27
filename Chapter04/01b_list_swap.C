@@ -1,8 +1,8 @@
-#include <vector>
+#include <list>
 #include <utility>
 #include <iostream>
 
-typedef std::vector<int> T;
+typedef std::list<int> T;
 
 int main() {
     T t1({1, 2, 3, 4});
