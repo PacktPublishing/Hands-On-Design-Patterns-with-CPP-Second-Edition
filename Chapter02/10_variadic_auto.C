@@ -18,6 +18,6 @@ constexpr auto nth_value(value_list<Values...>) {
 }
 
 int main() {
-    value_list<2, 3l, 4.2> vl;
+    value_list<2, 3l, 4.2> vl; // GCC - OK, Clang - no
     std::cout << nth_value<2>(vl) << std::endl;
 }
