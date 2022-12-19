@@ -23,5 +23,6 @@ class MyDeleter {
 int main() {
     MyHeap heap;
     std::unique_ptr<int, MyDeleter> p(new(&heap) int(0), MyDeleter(&heap));
+    std::unique_ptr<int> q = p; // Does not compile!
 }
 

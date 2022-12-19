@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <memory>
+#include <iostream>
 
 class MyHeap {
     public:
@@ -17,11 +18,15 @@ class MyDeleter {
     template <typename T> void operator()(T* p) {
         p->~T();
         heap_->deallocate(p);
+        std::cout << "Deleter invoked" << std::endl;
     }
 };
 
 int main() {
     MyHeap heap;
-    std::unique_ptr<int, MyDeleter> p(new(&heap) int(0), MyDeleter(&heap));
+    std::shared_ptr<int> p(new(&heap) int(0), MyDeleter(&heap));
+    std::shared_ptr<int> q(new int(1));
+    q = p;
+    std::cout << "End of scope, deletions to proceed..." << std::endl;
 }
 
