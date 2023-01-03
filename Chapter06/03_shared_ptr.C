@@ -3,18 +3,20 @@
 #include <iostream>
 
 class MyHeap {
-    public:
+public:
     void* allocate(size_t size) { return malloc(size); }
     void deallocate(void* p) { free(p); }
 };
+
 void* operator new(size_t size, MyHeap* heap) {
     return heap->allocate(size);
 }
 
 class MyDeleter {
     MyHeap* heap_;
-    public:
-    MyDeleter(MyHeap* heap) : heap_(heap) {}
+public:
+    MyDeleter(MyHeap* heap) noexcept : heap_(heap) {}
+
     template <typename T> void operator()(T* p) {
         p->~T();
         heap_->deallocate(p);
@@ -29,4 +31,3 @@ int main() {
     q = p;
     std::cout << "End of scope, deletions to proceed..." << std::endl;
 }
-
