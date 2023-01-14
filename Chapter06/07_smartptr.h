@@ -129,17 +129,17 @@ class smartptr_te_vtable {
     destructor_t destructor_;
   };
   const vtable_t* vtable_ = nullptr;
-  template <typename Deleter> constexpr static vtable_t vtable = {
-    smartptr_te_vtable::template destroy<Deleter>,
-    smartptr_te_vtable::template destructor<Deleter>
-  };
-
   template <typename Deleter> static void destroy(T* p, void* d) {
     (*static_cast<Deleter*>(d))(p);
   }
   template <typename Deleter> static void destructor(void* d) {
     static_cast<Deleter*>(d)->~Deleter();
   }
+
+  template <typename Deleter> constexpr static vtable_t vtable = {
+    smartptr_te_vtable::template destroy<Deleter>,
+    smartptr_te_vtable::template destructor<Deleter>
+  };
 
   alignas(8) char buf_[8];
 
