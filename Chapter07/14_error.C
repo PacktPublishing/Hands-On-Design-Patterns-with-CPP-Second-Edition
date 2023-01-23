@@ -11,7 +11,7 @@ struct A {
 int main() {
     // This does not compile:
     // SFINAE does not suppress errors in the body of the function!
-    f(0);
+    // f(0); // Does not compile
     A a{5};
     f(a);
 }
