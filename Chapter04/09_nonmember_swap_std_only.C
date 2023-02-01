@@ -24,7 +24,7 @@ int main() {
     std::cout << "c1: " << c1.i_ << " c2: " << c2.i_ << std::endl;
 
     std::swap(c1, c2);
-    std::cout << "\nAfter swap:" << std::endl;
+    std::cout << "\nAfter std::swap:" << std::endl;
     std::cout << "c1: " << c1.i_ << " c2: " << c2.i_ << std::endl;
 
     swap(c1, c2);

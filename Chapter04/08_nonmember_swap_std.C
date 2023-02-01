@@ -1,8 +1,6 @@
 #include <utility>
 #include <iostream>
 
-using std::swap;
-
 namespace N {
 class C {
     public:
@@ -18,16 +16,16 @@ namespace std {
 void swap(N::C& lhs, N::C& rhs) noexcept { std::cout << "std::swap(C&, C&)" << std::endl; lhs.swap(rhs); }
 }
 
-
 int main() {
     N::C c1(1), c2(2);
     std::cout << "\nInitial:" << std::endl;
     std::cout << "c1: " << c1.i_ << " c2: " << c2.i_ << std::endl;
 
     std::swap(c1, c2);
-    std::cout << "\nAfter swap:" << std::endl;
+    std::cout << "\nAfter std::swap:" << std::endl;
     std::cout << "c1: " << c1.i_ << " c2: " << c2.i_ << std::endl;
 
+    using std::swap;
     swap(c1, c2);
     std::cout << "\nAfter swap:" << std::endl;
     std::cout << "c1: " << c1.i_ << " c2: " << c2.i_ << std::endl;

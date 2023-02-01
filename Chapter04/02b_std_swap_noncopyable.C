@@ -16,6 +16,6 @@ int main() {
     std::cout << "a1: " << a1.i_ << " a2: " << a2.i_ << std::endl;
 
     std::swap(a1, a2);  // Not the best way
-    std::cout << "\nAfter swap:" << std::endl;
+    std::cout << "\nAfter std::swap:" << std::endl;
     std::cout << "a1: " << a1.i_ << " a2: " << a2.i_ << std::endl;
 }
