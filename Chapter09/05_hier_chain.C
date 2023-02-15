@@ -5,6 +5,7 @@ using std::endl;
 
 class SortedCollection;
 class Collection {
+    virtual const char* my_name() const { return "Collection"; }
     public:
     Collection() {}
     Collection filter();
@@ -12,15 +13,16 @@ class Collection {
 };
 
 class SortedCollection : public Collection {
+    const char* my_name() const override { return "SortedCollection"; }
     public:
     SortedCollection() {}
     SortedCollection(const Collection&) {}
-    SortedCollection search() { cout << "SortedCollection::search" << endl; return *this; }
-    SortedCollection median() { cout << "SortedCollection::median" << endl; return *this; }
+    SortedCollection search() { cout << my_name() << "::search" << endl; return *this; }
+    SortedCollection median() { cout << my_name() << "::median" << endl; return *this; }
 };
 
-Collection Collection::filter() { cout << "Collection::filter" << endl; return *this; }
-SortedCollection Collection::sort() { cout << "Collection::sort" << endl; return SortedCollection(*this); }
+Collection Collection::filter() { cout << my_name() << "::filter" << endl; return *this; }
+SortedCollection Collection::sort() { cout << my_name() << "::sort" << endl; return SortedCollection(*this); }
 
 int main() {
     Collection c;
