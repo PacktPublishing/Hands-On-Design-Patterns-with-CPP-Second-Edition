@@ -5,10 +5,11 @@ class C {
     public:
     C(int x) : x_(x) {}
     int get() const { return x_; }
+    friend C increase(C c, int dx);
 };
 
 C increase(C c, int dx) {
-    return C(c.x_ + dx);	// Does not compile
+    return C(c.x_ + dx);	// Now it compiles
 }
 
 int main() {
