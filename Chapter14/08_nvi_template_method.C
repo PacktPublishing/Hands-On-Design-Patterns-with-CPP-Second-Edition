@@ -1,3 +1,4 @@
+// NVI version of example 01
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -15,6 +16,7 @@ class Base {
         std::cout << "Step 2 done." << std::endl;
         return true;
     }
+    private:
     virtual bool Step1() {
         std::cout << "Step1 - version 0" << std::endl;
         return true;
@@ -23,12 +25,10 @@ class Base {
 };
 
 class Derived1 : public Base {
-    public:
     void Step2() override { std::cout << "Step2 - version 1" << std::endl; }
 };
 
 class Derived2 : public Base {
-    public:
     bool Step1() override { std::cout << "Step1 - version 2" << std::endl; return false; }
     void Step2() override { std::cout << "Step2 - version 2" << std::endl; }
 };
