@@ -1,3 +1,5 @@
+// This example shows the declaration - it won't link or run by itself.
+// It compiles into an object file: gcc -c 08_friend_forward.C
 class C {
     int x_;
     public:

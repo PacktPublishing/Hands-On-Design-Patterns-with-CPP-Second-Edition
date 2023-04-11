@@ -1,3 +1,5 @@
+// This example shows the declaration - it won't link or run by itself.
+// It compiles into an object file: gcc -c 09_friend_forward.C
 class C;
 C operator+(const C& lhs, const C& rhs);
 class C {
