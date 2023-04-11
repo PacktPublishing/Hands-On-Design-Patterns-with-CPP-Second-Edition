@@ -70,6 +70,7 @@ ScopeGuardImpl<Func, Arg> MakeGuard(const Func& func, Arg& arg) {
     return ScopeGuardImpl<Func, Arg>(func, arg);
 }
 
+// main() here models the Database::insert(42) operation with success or failure.
 int main() {
     Storage S;
     Index I;

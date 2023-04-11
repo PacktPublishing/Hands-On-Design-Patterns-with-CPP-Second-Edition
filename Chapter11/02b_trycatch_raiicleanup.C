@@ -43,6 +43,7 @@ class Index {
     int i1_ = 0;
 };
 
+// main() here models the Database::insert(42) operation with success or failure.
 int main() {
     Storage S;
     Index I;
@@ -54,13 +55,14 @@ int main() {
         Storage& S_;
     };
     try {
+        StorageFinalizer SF(S);
         S.insert(42, SUCCESS);
         try {
             I.insert(42, FAIL_THROW);
         } catch (...) {
             S.undo();
+            throw;
         }
-        S.finalize();
     } catch (...) {
     }
 

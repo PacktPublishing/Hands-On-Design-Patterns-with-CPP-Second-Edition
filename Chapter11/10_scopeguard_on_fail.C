@@ -92,6 +92,7 @@ auto operator+(ScopeGuardOnFailure, Func&& func) {
 #define ON_SCOPE_FAILURE \
     auto ANON_VAR(SCOPE_EXIT_STATE) = ScopeGuardOnFailure() + [&]()
 
+// main() here models the Database::insert(42) operation with success or failure.
 int main() {
     Storage S;
     Index I;
