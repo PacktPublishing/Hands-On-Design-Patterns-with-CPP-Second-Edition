@@ -133,9 +133,7 @@ template <typename T, typename DeletionPolicy = DeleteByOperator<T>,
 class SmartPtr : private DeletionPolicy, public CopyMovePolicy,
                  public ConversionPolicy<SmartPtr<T, DeletionPolicy, CopyMovePolicy, ConversionPolicy>, T> {
     T* p_;
-    // Either way works.
-    //friend class ConversionPolicy<SmartPtr<T, DeletionPolicy, CopyMovePolicy, ConversionPolicy>, T>;
-    template<typename, typename> friend class ConversionPolicy;
+    friend class ConversionPolicy<SmartPtr<T, DeletionPolicy, CopyMovePolicy, ConversionPolicy>, T>;
     public:
     explicit SmartPtr(T* p = nullptr,
                       DeletionPolicy&& deletion_policy = DeletionPolicy())

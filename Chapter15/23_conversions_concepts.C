@@ -1,3 +1,6 @@
+#if __cplusplus < 202002L
+#error "This example needs C++20"
+#else
 // Version 13 with enable_if to control conversion policies
 #include <cstdlib>
 #include <utility>
@@ -207,4 +210,4 @@ int main() {
         //C* p2 = c;      // Does not compile
     }
 }
-
+#endif // __cplusplus < 202002L

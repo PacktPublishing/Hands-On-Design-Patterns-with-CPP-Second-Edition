@@ -64,6 +64,7 @@ template <typename T, typename DeletionPolicy = DeleteByOperator<T>>
 class SmartPtr {
     T* p_;
     DeletionPolicy deletion_policy_;
+    static_assert(std::is_same<void, decltype(deletion_policy_(p_))>::value, "");
     public:
     explicit SmartPtr(T* p = nullptr,
                       const DeletionPolicy& deletion_policy = DeletionPolicy())

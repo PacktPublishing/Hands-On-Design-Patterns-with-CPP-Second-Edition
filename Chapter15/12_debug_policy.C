@@ -1,4 +1,4 @@
-// Version 01 with deletion policy.
+// Version 02 with debug policy.
 #include <cstdlib>
 #include <utility>
 #include <cassert>
@@ -64,7 +64,7 @@ struct Debug {
         std::cout << "Constructed SmartPtr for object " << static_cast<const void*>(p) << std::endl;
     }
     template <typename T> static void deleted(const T* p) {
-        std::cout << "Destroyed SmartPtr for object " << static_cast<const void*>(t) << std::endl;
+        std::cout << "Destroyed SmartPtr for object " << static_cast<const void*>(p) << std::endl;
     }
 };
 
@@ -73,7 +73,7 @@ struct NoDebug {
     template <typename T> static void deleted(const T*) {}
 };
 
-template <typename T, typename DeletionPolicy = DeleteByOperator<T>, DebugPolicy = NoDebug>
+template <typename T, typename DeletionPolicy = DeleteByOperator<T>, typename DebugPolicy = NoDebug>
 class SmartPtr {
     T* p_;
     DeletionPolicy deletion_policy_;
@@ -81,8 +81,11 @@ class SmartPtr {
     explicit SmartPtr(T* p = nullptr,
                       const DeletionPolicy& deletion_policy = DeletionPolicy())
         : p_(p), deletion_policy_(deletion_policy)
-    {}
+    {
+        DebugPolicy::constructed(p_);
+    }
     ~SmartPtr() { 
+        DebugPolicy::deleted(p_);
         deletion_policy_(p_);
     }
     T* operator->() { return p_; }
@@ -131,12 +134,14 @@ int main() {
     }
 
     {
-        SmartPtr<C, delete_C_t> c(new C(42), delete_C);
+        std::cout << "Without debug:" << std::endl;
+        SmartPtr<C, delete_C_t, NoDebug> c(new C(42), delete_C);
         std::cout << "C: " << c->get() << " @ " << &*c << std::endl;
     }
 
     {
-        SmartPtr<C, delete_C_t> c(new C(42), delete_T<C>);
+        std::cout << "With debug:" << std::endl;
+        SmartPtr<C, delete_C_t, Debug> c(new C(42), delete_T<C>);
         std::cout << "C: " << c->get() << " @ " << &*c << std::endl;
     }
     {

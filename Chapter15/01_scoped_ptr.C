@@ -12,7 +12,6 @@ class SmartPtr {
     ~SmartPtr() { 
         delete p_;
     }
-    void release() { p_ = nullptr; }
     T* operator->() { return p_; }
     const T* operator->() const { return p_; }
     T& operator*() { return *p_; }

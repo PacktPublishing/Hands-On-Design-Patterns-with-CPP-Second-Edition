@@ -1,4 +1,7 @@
 // Version 02 with concepts
+#if __cplusplus < 202002L
+#error "This example needs C++20"
+#else
 #include <cstdlib>
 #include <utility>
 #include <cassert>
@@ -130,4 +133,4 @@ int main() {
         //SmartPtr<int, delete_C_t> c(new int(42));    // Does not compile - constraint not satisfied
     }
 }
-
+#endif

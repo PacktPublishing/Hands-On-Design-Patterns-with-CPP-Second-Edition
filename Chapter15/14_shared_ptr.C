@@ -96,7 +96,7 @@ class NoMoveCopyRefCounted {
             delete count_;
         }
     }
-    NoMoveCopyRefCounted& operator=(const NoMoveCopyRefCounted&& that) {
+    NoMoveCopyRefCounted& operator=(const NoMoveCopyRefCounted& that) {
         --(*count_);
         if (*count_ == 0) {
             delete count_;
@@ -193,6 +193,7 @@ int main() {
         //auto c2(std::move(c1));  // Does not compile
         std::cout << "C: " << c->get() << " @ " << &*c << " n=" << c.count() << std::endl;
         //c1 = std::move(c);  // Does not compile
+        c1 = c;               // Copy - does compile
     }
 
     {

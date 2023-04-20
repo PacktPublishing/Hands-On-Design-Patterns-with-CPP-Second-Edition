@@ -96,7 +96,7 @@ class NoMoveCopyRefCounted {
             delete count_;
         }
     }
-    NoMoveCopyRefCounted& operator=(const NoMoveCopyRefCounted&& that) {
+    NoMoveCopyRefCounted& operator=(const NoMoveCopyRefCounted& that) {
         --(*count_);
         if (*count_ == 0) {
             delete count_;
@@ -160,6 +160,16 @@ class SmartPtr : private DeletionPolicy, public CopyMovePolicy {
     {
         DebugPolicy::copy(this, &that, p_);
     }
+    SmartPtr& operator=(const SmartPtr& that) {
+        if (this == &that) return *this;
+        DebugPolicy::destroy(this, p_, CopyMovePolicy::must_delete());
+        if (CopyMovePolicy::must_delete()) DeletionPolicy::operator()(p_);
+        p_ = that.p_;
+        DeletionPolicy::operator=(that);
+        CopyMovePolicy::operator=(that);
+        DebugPolicy::copy(this, &that, p_);
+        return *this;
+    }
     SmartPtr(SmartPtr&& that) :
         DeletionPolicy(std::move(that)),
         CopyMovePolicy(std::move(that)),
@@ -167,6 +177,16 @@ class SmartPtr : private DeletionPolicy, public CopyMovePolicy {
     {
         DebugPolicy::move(this, &that, p_);
         that.p_ = nullptr;
+    }
+    SmartPtr& operator=(SmartPtr&& that) {
+        if (this == &that) return *this;
+        DebugPolicy::destroy(this, p_, CopyMovePolicy::must_delete());
+        if (CopyMovePolicy::must_delete()) DeletionPolicy::operator()(p_);
+        p_ = std::exchange(that.p_, nullptr);
+        DeletionPolicy::operator=(std::move(that));
+        CopyMovePolicy::operator=(std::move(that));
+        DebugPolicy::move(this, &that, p_);
+        return *this;
     }
 };
 
@@ -203,6 +223,7 @@ int main() {
         }
         std::cout << "C: " << c1->get() << " @ " << &*c1 << " n=" << c1.count() << std::endl;
         std::cout << "C: " << c->get() << " @ " << &*c << " n=" << c.count() << std::endl;
+        c1 = c;               // Copy - does compile
     }
 
     {

@@ -99,7 +99,7 @@ class MoveCopyRefCounted {
             delete count_;
         }
     }
-    MoveCopyRefCounted& operator=(const MoveCopyRefCounted&& that) {
+    MoveCopyRefCounted& operator=(const MoveCopyRefCounted& that) {
         if (count_) {
             --(*count_);
             if (*count_ == 0) {
@@ -211,6 +211,7 @@ int main() {
         std::cout << "C: " << c1->get() << " @ " << &*c1 << " n=" << c1.count() << std::endl;
         std::cout << "C: " << c2->get() << " @ " << &*c2 << " n=" << c2.count() << std::endl;
         //(void)c.count();      // Crashes - moved-from object
+        c = c1;                 // OK - assigns a copy of c1
     }
 
     {

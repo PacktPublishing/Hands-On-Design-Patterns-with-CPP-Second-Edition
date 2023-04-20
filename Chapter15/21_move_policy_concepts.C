@@ -1,3 +1,6 @@
+#if __cplusplus < 202002L
+#error "This example needs C++20"
+#else
 // Version 13 with move policy.
 #include <cstdlib>
 #include <utility>
@@ -139,4 +142,4 @@ int main() {
         std::cout << "C: " << c2->get() << " @ " << &*c2 << std::endl;
     }
 }
-
+#endif // __cplusplus < 202002L

@@ -176,7 +176,7 @@ template <typename T,
 class SmartPtrAdapter : public SmartPtr<T, DeleteByOperator<T>, NoMoveCopyRefCounted, DebugPolicy>
 {
     using base_t = SmartPtr<T, DeleteByOperator<T>, NoMoveCopyRefCounted, DebugPolicy>;
-    using base_t::SmartPtr;
+    using SmartPtr<T, DeleteByOperator<T>, NoMoveCopyRefCounted, DebugPolicy>::SmartPtr;
     using base_t::operator=;
 };
 

@@ -137,7 +137,7 @@ template <typename T, typename DeletionPolicy = DeleteByOperator<T>,
 class SmartPtr : private DeletionPolicy, public CopyMovePolicy,
                  public ConversionPolicy<SmartPtr<T, DeletionPolicy, CopyMovePolicy, ConversionPolicy>, T> {
     T* p_;
-    template<typename, typename> friend class ConversionPolicy;
+    friend class ConversionPolicy<SmartPtr<T, DeletionPolicy, CopyMovePolicy, ConversionPolicy>, T>;
     public:
     using value_t = T;
     using deletion_policy_t = DeletionPolicy;

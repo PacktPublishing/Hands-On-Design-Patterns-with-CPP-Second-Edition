@@ -1,3 +1,6 @@
+#if __cplusplus < 202002L
+#error "This example needs C++20"
+#else
 // Version 11 with concept-based release policy
 #include <cstdlib>
 #include <utility>
@@ -124,4 +127,4 @@ int main() {
         SmartPtr<C> c1(std::move(c));
     }
 }
-
+#endif // __cplusplus < 202002L
