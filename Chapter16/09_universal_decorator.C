@@ -28,7 +28,11 @@ template <typename Callable> class DebugDecorator {
     DebugDecorator(F&& f, const char* s) : c_(std::forward<F>(f)), s_(s) {}
     template <typename... Args> auto operator()(Args&&... args) const {
         cout << "Invoking " << s_ << " (" << __PRETTY_FUNCTION__ << ")" << endl;
+#if __cplusplus >= 201703L // C++17
+        using res_t = typename std::invoke_result<Callable, Args...>::type;
+#else
         using res_t = typename std::result_of<Callable(Args...)>::type;
+#endif // C++17 
         result<res_t> res(c_, std::forward<Args>(args)...);
         return res();
     }

@@ -13,6 +13,7 @@ template <size_t F> class Date {
         constexpr size_t i1 = F/100;
         constexpr size_t i2 = (F - i1*100)/10;
         constexpr size_t i3 = F - i1*100 - i2*10;
+        static_assert(i1 >= 0 && i1 <= 2 && i2 >= 0 && i2 <= 2 && i3 >= 0 && i3 <= 2 && i1 != i2 && i2 != i3, "Bad format");
         out << t[i1] << "/" << t[i2] << "/" << t[i3];
         return out;
     }
