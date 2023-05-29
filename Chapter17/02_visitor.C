@@ -1,7 +1,8 @@
-// Basic visitor
+// 01 with polymorphic calls
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <memory>
 
 class Cat;
 class Dog;
@@ -15,7 +16,7 @@ class PetVisitor {
 class Pet {
     public:
     virtual ~Pet() {}
-    Pet(std::string_view color) : color_(color) {}      // For C++14, replace std::string_view with const std::string&
+    Pet(std::string_view color) : color_(color) {}
     const std::string& color() const { return color_; }
     virtual void accept(PetVisitor& v) = 0;
     private:
@@ -47,14 +48,14 @@ class PlayingVisitor : public PetVisitor {
 };
 
 int main() {
-    Cat c("orange");
-    Dog d("brown");
+    std::unique_ptr<Pet> c(new Cat("orange"));
+    std::unique_ptr<Pet> d(new Dog("brown"));
 
     FeedingVisitor fv;
-    c.accept(fv);
-    d.accept(fv);
+    c->accept(fv);
+    d->accept(fv);
 
     PlayingVisitor pv;
-    c.accept(pv);
-    d.accept(pv);
+    c->accept(pv);
+    d->accept(pv);
 }

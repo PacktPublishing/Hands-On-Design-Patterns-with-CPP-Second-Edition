@@ -1,7 +1,8 @@
-// Basic visitor
+// Visitable composite (based on 02)
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <memory>
 
 class Cat;
 class Dog;
@@ -15,7 +16,7 @@ class PetVisitor {
 class Pet {
     public:
     virtual ~Pet() {}
-    Pet(std::string_view color) : color_(color) {}      // For C++14, replace std::string_view with const std::string&
+    Pet(std::string_view color) : color_(color) {}
     const std::string& color() const { return color_; }
     virtual void accept(PetVisitor& v) = 0;
     private:
@@ -46,15 +47,26 @@ class PlayingVisitor : public PetVisitor {
     void visit(Dog* d) override { std::cout << "Play fetch with the " << d->color() << " dog" << std::endl; }
 };
 
+class Family {
+    public:
+    Family(const char* cat_color, const char* dog_color) :
+        cat_(cat_color), dog_(dog_color)
+    {}
+    void accept(PetVisitor& v) {
+        cat_.accept(v);
+        dog_.accept(v);
+    }
+    private:
+    Cat cat_;
+    Dog dog_;
+};
+
 int main() {
-    Cat c("orange");
-    Dog d("brown");
+    Family f("orange", "brown");
 
     FeedingVisitor fv;
-    c.accept(fv);
-    d.accept(fv);
+    f.accept(fv);
 
     PlayingVisitor pv;
-    c.accept(pv);
-    d.accept(pv);
+    f.accept(pv);
 }

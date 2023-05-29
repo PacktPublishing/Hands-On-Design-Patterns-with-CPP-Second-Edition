@@ -1,7 +1,8 @@
-// Basic visitor
+// 02 with template Visitable
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <memory>
 
 class Cat;
 class Dog;
@@ -15,23 +16,28 @@ class PetVisitor {
 class Pet {
     public:
     virtual ~Pet() {}
-    Pet(std::string_view color) : color_(color) {}      // For C++14, replace std::string_view with const std::string&
+    Pet(std::string_view color) : color_(color) {}
     const std::string& color() const { return color_; }
     virtual void accept(PetVisitor& v) = 0;
     private:
     std::string color_;
 };
 
-class Cat : public Pet {
+template <typename Derived>
+class Visitable : public Pet {
     public:
-    Cat(std::string_view color) : Pet(color) {}
-    void accept(PetVisitor& v) override { v.visit(this); }
+    using Pet::Pet;
+    void accept(PetVisitor& v) override {
+        v.visit(static_cast<Derived*>(this)); 
+    }
 };
 
-class Dog : public Pet {
-    public:
-    Dog(std::string_view color) : Pet(color) {}
-    void accept(PetVisitor& v) override { v.visit(this); }
+class Cat : public Visitable<Cat> {
+    using Visitable<Cat>::Visitable;
+};
+
+class Dog : public Visitable<Dog> {
+    using Visitable<Dog>::Visitable;
 };
 
 class FeedingVisitor : public PetVisitor {
@@ -47,14 +53,14 @@ class PlayingVisitor : public PetVisitor {
 };
 
 int main() {
-    Cat c("orange");
-    Dog d("brown");
+    std::unique_ptr<Pet> c(new Cat("orange"));
+    std::unique_ptr<Pet> d(new Dog("brown"));
 
     FeedingVisitor fv;
-    c.accept(fv);
-    d.accept(fv);
+    c->accept(fv);
+    d->accept(fv);
 
     PlayingVisitor pv;
-    c.accept(pv);
-    d.accept(pv);
+    c->accept(pv);
+    d->accept(pv);
 }

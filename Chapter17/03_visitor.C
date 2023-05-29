@@ -1,13 +1,15 @@
-// Basic visitor
+// 02 with polymorphic calls for visitor too
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <memory>
 
 class Cat;
 class Dog;
 
 class PetVisitor {
     public:
+    virtual ~PetVisitor() {}
     virtual void visit(Cat* c) = 0;
     virtual void visit(Dog* d) = 0;
 };
@@ -15,7 +17,7 @@ class PetVisitor {
 class Pet {
     public:
     virtual ~Pet() {}
-    Pet(std::string_view color) : color_(color) {}      // For C++14, replace std::string_view with const std::string&
+    Pet(std::string_view color) : color_(color) {}
     const std::string& color() const { return color_; }
     virtual void accept(PetVisitor& v) = 0;
     private:
@@ -46,15 +48,21 @@ class PlayingVisitor : public PetVisitor {
     void visit(Dog* d) override { std::cout << "Play fetch with the " << d->color() << " dog" << std::endl; }
 };
 
+void dispatch(Pet& p, PetVisitor& v) { p.accept(v); }
+
 int main() {
-    Cat c("orange");
-    Dog d("brown");
+    std::unique_ptr<Pet> c(new Cat("orange"));
+    std::unique_ptr<Pet> d(new Dog("brown"));
 
-    FeedingVisitor fv;
-    c.accept(fv);
-    d.accept(fv);
+    std::unique_ptr<PetVisitor> fv(new FeedingVisitor);
+    c->accept(*fv);
+    d->accept(*fv);
 
-    PlayingVisitor pv;
-    c.accept(pv);
-    d.accept(pv);
+    std::unique_ptr<PetVisitor> pv(new PlayingVisitor);
+    c->accept(*pv);
+    d->accept(*pv);
+
+    // Showcase double dispatch.
+    dispatch(*c, *pv);
+    dispatch(*d, *fv);
 }

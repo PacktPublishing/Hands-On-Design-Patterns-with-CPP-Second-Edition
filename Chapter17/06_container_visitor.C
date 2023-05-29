@@ -1,7 +1,9 @@
-// Basic visitor
+// Visitable container (based on 02)
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <memory>
+#include <vector>
 
 class Cat;
 class Dog;
@@ -15,7 +17,7 @@ class PetVisitor {
 class Pet {
     public:
     virtual ~Pet() {}
-    Pet(std::string_view color) : color_(color) {}      // For C++14, replace std::string_view with const std::string&
+    Pet(std::string_view color) : color_(color) {}
     const std::string& color() const { return color_; }
     virtual void accept(PetVisitor& v) = 0;
     private:
@@ -46,15 +48,28 @@ class PlayingVisitor : public PetVisitor {
     void visit(Dog* d) override { std::cout << "Play fetch with the " << d->color() << " dog" << std::endl; }
 };
 
+class Shelter {
+    public:
+    void add(Pet* p) {
+        pets_.emplace_back(p);
+    }
+    void accept(PetVisitor& v) {
+        for (auto& p : pets_) {
+            p->accept(v);
+        }
+    }
+    private:
+    std::vector<std::unique_ptr<Pet>> pets_;
+};
+
 int main() {
-    Cat c("orange");
-    Dog d("brown");
+    Shelter s;
+    s.add(new Cat("orange"));
+    s.add(new Dog("brown"));
 
     FeedingVisitor fv;
-    c.accept(fv);
-    d.accept(fv);
+    s.accept(fv);
 
     PlayingVisitor pv;
-    c.accept(pv);
-    d.accept(pv);
+    s.accept(pv);
 }
