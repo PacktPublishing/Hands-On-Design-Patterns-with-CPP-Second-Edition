@@ -1,3 +1,4 @@
+// 01 with a race, detectable by TSAN
 #include <mutex>
 #include <thread>
 #include <iostream>
@@ -6,7 +7,7 @@ std::mutex m;
 int i = 0;
 
 void add() {
-    std::lock_guard<std::mutex> l(m);
+    //std::lock_guard<std::mutex> l(m);
     ++i;
 }
 
