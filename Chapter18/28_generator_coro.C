@@ -1,6 +1,3 @@
-#if __cplusplus < 202002L
-#error "This example needs C++20"
-#else
 #include <coroutine>
 #include <iostream>
 #include <chrono>
@@ -139,4 +136,3 @@ int main() {
     delete [] a;
 
 }
-#endif // __cplusplus < 202002L 

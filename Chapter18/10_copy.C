@@ -1,6 +1,3 @@
-#if __cplusplus < 202002L
-#error "This example needs C++20"
-#else
 #include <thread>
 #include <iostream>
 #include <vector>
@@ -27,4 +24,3 @@ int main() {
     }
     std::cout << unique_count << " " << unique_even_count << std::endl;
 }
-#endif // __cplusplus < 202002L
