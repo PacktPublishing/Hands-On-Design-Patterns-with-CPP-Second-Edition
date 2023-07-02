@@ -142,14 +142,16 @@ class SmartPtr : private DeletionPolicy, public CopyMovePolicy {
     }
     // Explicit and implicit operators cannot be overloaded even if some are disabled:
     // This will not compile.
-    template <typename U = T, typename V = std::enable_if_t<ConversionPolicy::implicit_conv, U>>
+    /*template <typename U = T, typename V = std::enable_if_t<ConversionPolicy::implicit_conv, U>>
     operator U*() { return p_; }
     template <typename U = T, typename V = std::enable_if_t<ConversionPolicy::implicit_conv, U>>
     operator const U*() const { return p_; }
     template <typename U = T, typename V = std::enable_if_t<ConversionPolicy::explicit_conv, U>>
     explicit operator U*() { return p_; }
     template <typename U = T, typename V = std::enable_if_t<ConversionPolicy::explicit_conv, U>>
-    explicit operator const U*() const { return p_; }
+    explicit operator const U*() const { return p_; }*/
+    operator T*() { return p_; }
+    operator const T*() const { return p_; }
     void release() { p_ = NULL; }
     T* operator->() { return p_; }
     const T* operator->() const { return p_; }
