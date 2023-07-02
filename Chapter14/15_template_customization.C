@@ -12,7 +12,7 @@ template <typename T> struct B : public A<T> {
     void h2() { this->f(); }
     void h3() { ::f(); }
 
-    void h4() { g(); }     // Should not compile (buggy compilers call A::g())
+    // void h4() { g(); }     // Should not compile (buggy compilers call A::g())
     void h5() { this->g(); }
 };
 
@@ -36,7 +36,7 @@ int main () {
     b.h2();
     b.h3();
 
-    b.h4();
+    // b.h4(); // Does not compile
     b.h5();
 
     std::cout << std::endl;
