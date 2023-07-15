@@ -1,6 +1,3 @@
-#if __cplusplus < 201703L // C++17 needed
-#error "This example requires C++17"
-#else
 #include <atomic>
 #include <mutex>
 #include <functional>
@@ -75,4 +72,3 @@ int main() {
     }
     std::cout << std::endl;
 }
-#endif // __cplusplus < 201703L

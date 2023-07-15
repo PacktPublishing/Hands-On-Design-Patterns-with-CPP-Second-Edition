@@ -1,6 +1,3 @@
-#if __cplusplus < 202002L
-#error "This example needs C++20"
-#else
 #include <atomic>
 #include <thread>
 #include <chrono>
@@ -50,4 +47,3 @@ int main() {
     }
     std::cout << std::endl;
 }
-#endif // __cplusplus < 202002L

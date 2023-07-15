@@ -1,6 +1,3 @@
-#if __cplusplus < 201703L // C++17 needed
-#error "This example requires C++17"
-#else
 #include <atomic>
 #include <thread>
 #include <iostream>
@@ -99,4 +96,3 @@ int main() {
     consumer.join();
     std::cout << "Queue was full " << n_full << " times" << std::endl;
 }
-#endif // __cplusplus < 201703L
