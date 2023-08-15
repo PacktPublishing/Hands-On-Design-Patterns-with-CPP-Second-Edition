@@ -1,6 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <unistd.h>
+#endif
 
 #include <vector>
 
@@ -169,7 +174,18 @@ BENCHMARK_TEMPLATE1(BM_string_compare_short, small_string)->ARG;
 BENCHMARK_TEMPLATE1(BM_string_create_long, simple_string);
 BENCHMARK_TEMPLATE1(BM_string_create_long, small_string);
 
-static const long max_threads = sysconf(_SC_NPROCESSORS_CONF);
+int getNumberOfCores() {
+#ifdef WIN32
+    SYSTEM_INFO sysinfo;
+    GetSystemInfo(&sysinfo);
+    return sysinfo.dwNumberOfProcessors;
+#else
+    return sysconf(_SC_NPROCESSORS_CONF);
+#endif
+}
+
+static const long max_threads = getNumberOfCores();
+
 BENCHMARK_TEMPLATE1(BM_string_create_short, simple_string)->ThreadRange(1, max_threads);
 BENCHMARK_TEMPLATE1(BM_string_create_short, small_string)->ThreadRange(1, max_threads);
 
