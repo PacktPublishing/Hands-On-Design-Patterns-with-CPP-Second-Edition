@@ -24,8 +24,10 @@ Out_container<T> resequence(const In_container<T>& in_container) {
 #include <deque>
 
 int main() {
-    std::vector<int> v { 1, 2, 3, 4, 5 };
-    print(v); // GCC - OK, Clang - no
-    auto d = resequence<std::deque>(v);//
+    std::vector<int> v{ 1, 2, 3, 4, 5 };
+#if not defined(__clang__) && not defined(_MSC_VER)
+    print(v);
+    auto d = resequence<std::deque>(v);
     print(d);
+#endif
 }
