@@ -26,7 +26,7 @@ int main() {
     std::cout << "c1: " << c1.i_ << " c2: " << c2.i_ << std::endl;
 
     using std::swap;
-    swap(c1, c2);
+    // swap(c1, c2); // Does not compile
     std::cout << "\nAfter swap:" << std::endl;
     std::cout << "c1: " << c1.i_ << " c2: " << c2.i_ << std::endl;
 }
