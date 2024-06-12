@@ -27,7 +27,11 @@ template <typename T> struct promise_type {
 
 template <typename T> class co_resource {
   public:
+#if defined(_MSC_VER)
+  using promise_type = promise_type<T>;
+#else
   using promise_type = struct promise_type<T>;
+#endif
 
   private:
   using handle_type = std::coroutine_handle<promise_type>;
