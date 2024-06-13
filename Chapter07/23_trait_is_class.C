@@ -8,7 +8,7 @@ template <typename T> std::false_type test(...);     // selected otherwise
 }
 
 template <typename T> using is_class = decltype(detail::test<T>(nullptr));
-template <typename T> using is_class_t = is_class<T>::type;
+template <typename T> using is_class_t = typename is_class<T>::type;
 template <typename T> inline constexpr bool is_class_v = is_class<T>::value;
 
 struct A {
