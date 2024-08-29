@@ -1,6 +1,3 @@
-#if __cplusplus < 201703L // C++17 needed
-#error "This example requires C++17"
-#else
 #include <atomic>
 #include <thread>
 #include <iostream>
@@ -38,4 +35,3 @@ int main() {
     // Join producer (it must be done already).
     t.join();
 }
-#endif // __cplusplus < 201703L

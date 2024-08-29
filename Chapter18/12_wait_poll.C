@@ -1,6 +1,3 @@
-#if __cplusplus < 202002L // C++20 needed
-#error "This example requires C++20"
-#else
 #include <atomic>
 #include <thread>
 #include <iostream>
@@ -35,4 +32,3 @@ int main() {
     // Join producer (it must be done already).
     t.join();
 }
-#endif // __cplusplus < 202002L
