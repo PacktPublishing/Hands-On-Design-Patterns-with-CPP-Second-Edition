@@ -49,6 +49,9 @@ With the following software and hardware list you can run all code files present
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it]().
 
+## Errata
+* Page 64 (code example under 'Expressing exclusive ownership'): **DoWork()** _should be_ **Work()**
+
 ### Related products
 * Template Metaprogramming with C++ [[Packt]](https://www.packtpub.com/product/template-metaprogramming-with-c/9781803243450?utm_source=github&utm_medium=repository&utm_campaign=) [[Amazon]](https://www.amazon.com/dp/1803243457)
 
