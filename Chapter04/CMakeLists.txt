@@ -1,0 +1,33 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(Chapter04 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(01a_vector_swap 01a_vector_swap.C)
+add_executable(01b_list_swap 01b_list_swap.C)
+
+add_executable(02a_std_swap_copyable 02a_std_swap_copyable.C)
+add_executable(02b_std_swap_noncopyable 02b_std_swap_noncopyable.C)
+add_executable(02c_std_swap_movable 02c_std_swap_movable.C)
+add_executable(02d_std_swap_nonmovable 02d_std_swap_nonmovable.C)
+
+add_executable(03a_swap_rollback 03a_swap_rollback.C)
+add_executable(03b_swap_rollback 03b_swap_rollback.C)
+
+add_executable(04_vector_empty 04_vector_empty.C)
+
+add_executable(05_change_object 05_change_object.C)
+
+add_executable(06a_member_swap 06a_member_swap.C)
+add_executable(06b_member_swap_pimpl 06b_member_swap_pimpl.C)
+
+add_executable(07a_nonmember_swap_none.C 07a_nonmember_swap_none.C)
+add_executable(07b_nonmember_swap_func.C 07b_nonmember_swap_func.C)
+add_executable(07c_nonmember_swap_friend_forward.C 07c_nonmember_swap_friend_forward.C)
+add_executable(07d_nonmember_swap_friend.C 07d_nonmember_swap_friend.C)
+
+add_executable(08_nonmember_swap_std 08_nonmember_swap_std.C)
+
+add_executable(09_nonmember_swap_std_only 09_nonmember_swap_std_only.C)
