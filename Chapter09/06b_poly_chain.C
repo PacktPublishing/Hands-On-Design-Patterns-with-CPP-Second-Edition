@@ -18,7 +18,7 @@ class SortedCollection : public Collection {
     public:
     SortedCollection() {}
     SortedCollection(const Collection&) {}
-    SortedCollection filter() override { cout << my_name() << "::filter" << endl; return *this; }     // Not covariant return type, will not compile!
+    // SortedCollection filter() override { cout << my_name() << "::filter" << endl; return *this; }     // Not covariant return type, will not compile!
     SortedCollection search() { cout << my_name() << "::search" << endl; return *this; }
     SortedCollection median() override { cout << my_name() << "::median" << endl; return *this; }
 };

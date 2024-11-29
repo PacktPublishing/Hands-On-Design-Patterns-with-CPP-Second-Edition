@@ -11,6 +11,12 @@
 #define REPEAT32(x) REPEAT16(x) REPEAT16(x)
 #define REPEAT(x) REPEAT32(x)
 
+#ifndef _MSC_VER
+#define NOINLINE __attribute__ ((noinline)) // Simulate separate compilation unit
+#else
+#define NOINLINE __declspec(noinline) // Simulate separate compilation unit
+#endif
+
 class Positional {
     public:
     Positional(bool a = false, bool b = false, bool c = false, bool d = false,
@@ -28,7 +34,7 @@ class Positional {
     const bool g_;
     const bool h_;
 };
-__attribute__ ((noinline)) // Simulate separate compilation unit
+NOINLINE
 Positional::Positional(bool a, bool b, bool c, bool d,
                        bool e, bool f, bool g, bool h)
         : a_(a), b_(b), c_(c), d_(d), e_(e), f_(f), g_(g), h_(h) {}
@@ -67,7 +73,7 @@ class Named {
     private:
     const Options options_;
 };
-__attribute__ ((noinline))
+NOINLINE
 Named::Named(Named::Options options) : options_(options) {}
 
 class Aggregate {
@@ -92,7 +98,7 @@ class Aggregate {
     private:
     const Options options_;
 };
-__attribute__ ((noinline))
+NOINLINE
 Aggregate::Aggregate(const Aggregate::Options& options) : options_(options) {}
 
 void BM_positional_const(benchmark::State& state) {
