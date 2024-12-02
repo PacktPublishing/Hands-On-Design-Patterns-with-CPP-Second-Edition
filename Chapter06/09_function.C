@@ -8,6 +8,12 @@
 #include <functional>
 #include <algorithm>
 
+#ifndef _MSC_VER
+#define NOINLINE __attribute__ ((noinline)) // Simulate separate compilation unit
+#else
+#define NOINLINE __declspec(noinline) // Simulate separate compilation unit
+#endif
+
 #define REQUIRES(...) std::enable_if_t<__VA_ARGS__, int> = 0
 
 template<typename Signature, size_t Size = sizeof(void*)*2, size_t Alignment = alignof(void*)> class Function;
@@ -68,7 +74,7 @@ using SF = std::function<F>;
 auto invoke_sf(int a, int b, int c, int d, const SF& f) { return f(a, b, c, d); }
 #else 
 int fi(int a, int b, int c, int d) { return a + b + c + d; }
-__attribute__ ((noinline)) int f(int a, int b, int c, int d) { return a + b + c + d; }
+NOINLINE int f(int a, int b, int c, int d) { return a + b + c + d; }
 
 template <typename F> auto invoke(int a, int b, int c, int d, const F& f) { return f(a, b, c, d); }
 
