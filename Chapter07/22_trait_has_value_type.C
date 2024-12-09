@@ -8,7 +8,7 @@ template <typename T> std::false_type test(...);     // failback
 }
 
 template <typename T> using has_value_type = decltype(detail::test<T>(0));
-template <typename T> using has_value_type_t = has_value_type<T>::type;
+template <typename T> using has_value_type_t = typename has_value_type<T>::type;
 template <typename T> inline constexpr bool has_value_type_v = has_value_type<T>::value;
 
 struct A {
