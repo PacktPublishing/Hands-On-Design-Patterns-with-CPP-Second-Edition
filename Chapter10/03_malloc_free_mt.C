@@ -1,5 +1,10 @@
 #include <stdlib.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <unistd.h>
+#endif
 
 #include <vector>
 
@@ -28,7 +33,18 @@ void BM_malloc_free(benchmark::State& state) {
     for (size_t i = 0; i < N; ++i) free(v[i]);
 }
 
-static const long max_threads = sysconf(_SC_NPROCESSORS_CONF);
+int getNumberOfCores() {
+#ifdef WIN32
+    SYSTEM_INFO sysinfo;
+    GetSystemInfo(&sysinfo);
+    return sysinfo.dwNumberOfProcessors;
+#else
+    return sysconf(_SC_NPROCESSORS_CONF);
+#endif
+}
+
+static const long max_threads = getNumberOfCores();
+
 BENCHMARK(BM_malloc_free)->RangeMultiplier(2)->Ranges({{32, 256}, {1<<15, 1<<15}})->ThreadRange(1, max_threads);
 
 BENCHMARK_MAIN();

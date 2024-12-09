@@ -2,6 +2,7 @@
 #include <string.h>
 #include <new>
 #include <utility>
+#include <functional>
 
 #include "benchmark/benchmark.h"
 
