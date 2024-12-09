@@ -8,7 +8,8 @@ class C {
 };
 
 C increase(C c, int dx) {
-    return C(c.x_ + dx);	// Does not compile
+    // return C(c.x_ + dx);	// Does not compile
+    return C(c.get() + dx);
 }
 
 int main() {
