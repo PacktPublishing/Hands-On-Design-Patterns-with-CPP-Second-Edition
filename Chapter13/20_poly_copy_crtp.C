@@ -1,16 +1,22 @@
 #include <iostream>
 #include <memory>
 #include <typeinfo>
+
+#if not defined(_MSC_VER)
 #include <cxxabi.h>
+#endif
 
 template <typename T> auto type(T&& p) {
+#if not defined(_MSC_VER)
     int status;
     char* name = abi::__cxa_demangle(typeid(p).name(), 0, 0, &status);
     std::string s(name);
     ::free(name);
     return s;
+#else
+    return std::string(typeid(p).name());
+#endif
 }
-
 
 class Base {
     public:

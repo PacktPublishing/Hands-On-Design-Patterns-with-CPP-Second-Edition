@@ -1,10 +1,17 @@
 #include <iostream>
 #include <typeinfo>
+
+#if not defined(_MSC_VER)
 #include <cxxabi.h>
+#endif
 
 template <typename T> auto type(T&& p) {
+#if not defined(_MSC_VER)
     int status;
     return abi::__cxa_demangle(typeid(p).name(), 0, 0, &status);
+#else
+return std::string(typeid(p).name());
+#endif
 }
 
 class Base {

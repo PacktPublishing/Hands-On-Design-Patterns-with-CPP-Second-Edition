@@ -1,17 +1,26 @@
 #include <iostream>
 #include <typeinfo>
-#include <cxxabi.h>
 #include <type_traits>
+
+#if not defined(_MSC_VER)
+#include <cxxabi.h>
+#endif
 
 template <typename T> auto type(T&& p) {
     std::string name;
     using TT = std::remove_reference_t<T>;
     if (std::is_const<TT>::value) name += "const ";
     if (std::is_volatile<TT>::value) name += "volatile ";
+
+#if not defined(_MSC_VER)
     int status;
     char* mangled_name = abi::__cxa_demangle(typeid(p).name(), 0, 0, &status);
     name += mangled_name;
     ::free(mangled_name);
+#else
+    name += std::string(typeid(p).name());
+#endif
+
 #if 0
     if (std::is_lvalue_reference<decltype(p)>::value) name += "&";
     if (std::is_rvalue_reference<decltype(p)>::value) name += "&&";
