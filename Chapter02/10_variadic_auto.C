@@ -18,6 +18,8 @@ constexpr auto nth_value(value_list<Values...>) {
 }
 
 int main() {
+#if not defined(__clang__)
     value_list<2, 3l, 4.2> vl;
     std::cout << nth_value<2>(vl) << std::endl;
+#endif
 }
