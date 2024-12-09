@@ -4,6 +4,7 @@
 
 class Base {
     public:
+    virtual ~Base() = default;
     bool TheAlgorithm() {
         std::cout << "\nAttempting step 1..." << std::endl;
         if (!Step1()) {
